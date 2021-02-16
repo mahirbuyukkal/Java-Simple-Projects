@@ -1,2 +1,2 @@
 # Java-Simple-Projects
-# Java-Simple-Projects
+# Basic ATM program
