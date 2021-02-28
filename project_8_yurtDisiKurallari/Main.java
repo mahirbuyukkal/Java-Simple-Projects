@@ -1,4 +1,4 @@
-
+// Yurtdışına çıkmak için gereken şartları sağlıyor muyum ?
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         
