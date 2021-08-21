@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import Helper.*;
+import Model.Muhendis;
 import Model.Yetkili;
 
 public class LoginGUI extends JFrame {
@@ -74,40 +75,6 @@ public class LoginGUI extends JFrame {
 		w_tabpane.setBounds(0, 177, 687, 305);
 		w_pane.add(w_tabpane);
 		
-		JPanel w_muhendisLogin = new JPanel();
-		w_muhendisLogin.setBackground(new Color(176, 196, 222));
-		w_tabpane.addTab("Muhendis Giriþi", null, w_muhendisLogin, null);
-		w_muhendisLogin.setLayout(null);
-		
-		JLabel lblTcNumaranz = new JLabel("T.C. Numaran\u0131z: ");
-		lblTcNumaranz.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
-		lblTcNumaranz.setBounds(66, 63, 114, 25);
-		w_muhendisLogin.add(lblTcNumaranz);
-		
-		JLabel lblifre = new JLabel("\u015Eifre: ");
-		lblifre.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
-		lblifre.setBounds(66, 127, 114, 25);
-		w_muhendisLogin.add(lblifre);
-		
-		fld_muhendisTc = new JTextField();
-		fld_muhendisTc.setBounds(221, 60, 350, 37);
-		w_muhendisLogin.add(fld_muhendisTc);
-		fld_muhendisTc.setColumns(10);
-		
-		fld_muhendisPass = new JPasswordField();
-		fld_muhendisPass.setBounds(221, 124, 350, 37);
-		w_muhendisLogin.add(fld_muhendisPass);
-		
-		JButton btn_register = new JButton("Kay\u0131t Ol");
-		btn_register.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		btn_register.setBounds(221, 197, 164, 37);
-		w_muhendisLogin.add(btn_register);
-		
-		JButton btn_muhendisLogin = new JButton("Giri\u015F Yap");
-		btn_muhendisLogin.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
-		btn_muhendisLogin.setBounds(407, 197, 164, 37);
-		w_muhendisLogin.add(btn_muhendisLogin);
-		
 		JPanel w_doktorLogin = new JPanel();
 		w_doktorLogin.setBackground(new Color(176, 196, 222));
 		w_tabpane.addTab("Yetkili Giriþi", null, w_doktorLogin, null);
@@ -130,15 +97,29 @@ public class LoginGUI extends JFrame {
 							
 							if(fld_yetkiliTc.getText().equals(rs.getString("tcno")) && fld_yetkiliPass.getText().equals(rs.getString("password"))) {
 								
-								Yetkili ymuhendis = new Yetkili();
-								ymuhendis.setId(rs.getInt("id"));
-								ymuhendis.setPassword("password");
-								ymuhendis.setTcno(rs.getString("tcno"));
-								ymuhendis.setName(rs.getString("name"));
-								ymuhendis.setType(rs.getString("type"));
-								YetkiliGUI yGUI = new YetkiliGUI(ymuhendis);
-								yGUI.setVisible(true);
-								dispose();
+								if(rs.getString("type").equals("Yetkili")) {
+									Yetkili ymuhendis = new Yetkili();
+									ymuhendis.setId(rs.getInt("id"));
+									ymuhendis.setPassword("password");
+									ymuhendis.setTcno(rs.getString("tcno"));
+									ymuhendis.setName(rs.getString("name"));
+									ymuhendis.setType(rs.getString("type"));
+									YetkiliGUI yGUI = new YetkiliGUI(ymuhendis);
+									yGUI.setVisible(true);
+									dispose();
+								}
+								
+								if(rs.getString("type").equals("Mühendis")) {
+									Muhendis muhendis = new Muhendis();
+									muhendis.setId(rs.getInt("id"));
+									muhendis.setPassword("password");
+									muhendis.setTcno(rs.getString("tcno"));
+									muhendis.setName(rs.getString("name"));
+									muhendis.setType(rs.getString("type"));
+									MuhendisGUI mGUI = new MuhendisGUI(muhendis);
+									mGUI.setVisible(true);
+									dispose();
+								}
 								
 							}
 						}
@@ -173,5 +154,39 @@ public class LoginGUI extends JFrame {
 		fld_yetkiliTc.setColumns(10);
 		fld_yetkiliTc.setBounds(223, 61, 350, 37);
 		w_doktorLogin.add(fld_yetkiliTc);
+		
+		JPanel w_muhendisLogin = new JPanel();
+		w_muhendisLogin.setBackground(new Color(176, 196, 222));
+		w_tabpane.addTab("Staj Öðrenci", null, w_muhendisLogin, null);
+		w_muhendisLogin.setLayout(null);
+		
+		JLabel lblTcNumaranz = new JLabel("T.C. Numaran\u0131z: ");
+		lblTcNumaranz.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
+		lblTcNumaranz.setBounds(66, 63, 114, 25);
+		w_muhendisLogin.add(lblTcNumaranz);
+		
+		JLabel lblifre = new JLabel("\u015Eifre: ");
+		lblifre.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
+		lblifre.setBounds(66, 127, 114, 25);
+		w_muhendisLogin.add(lblifre);
+		
+		fld_muhendisTc = new JTextField();
+		fld_muhendisTc.setBounds(221, 60, 350, 37);
+		w_muhendisLogin.add(fld_muhendisTc);
+		fld_muhendisTc.setColumns(10);
+		
+		fld_muhendisPass = new JPasswordField();
+		fld_muhendisPass.setBounds(221, 124, 350, 37);
+		w_muhendisLogin.add(fld_muhendisPass);
+		
+		JButton btn_register = new JButton("Kay\u0131t Ol");
+		btn_register.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		btn_register.setBounds(221, 197, 164, 37);
+		w_muhendisLogin.add(btn_register);
+		
+		JButton btn_muhendisLogin = new JButton("Giri\u015F Yap");
+		btn_muhendisLogin.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 14));
+		btn_muhendisLogin.setBounds(407, 197, 164, 37);
+		w_muhendisLogin.add(btn_muhendisLogin);
 	}
 }
